@@ -1,6 +1,39 @@
+*{
+	color: black;
+}
 .player{
+	text-align: center;
 	border: 1px solid black;
 	width: 200px;
 	height: 200px;
 	margin: 5px;
+}
+img{
+	width: 100px;
+	height: 100px;
+}
+#p1 .player{
+	border-color: green;
+	border-width: 2px;
+	background-color: white;
+}
+#com .player{
+	border-color: red;
+	border-width: 2px;
+	background-color: black;
+}
+#def .player{
+	background-color: red;
+	border-color: black;
+	border-width: 2px;
+}
+.selection .player{
+	background-color: blue; 
+}
+
+#com h3{
+	color: white;
+}
+body{
+	background-image: url("https://wallpaperscraft.com/image/star_wars_battlefront_electronic_arts_105865_3840x2160.jpg");
 }

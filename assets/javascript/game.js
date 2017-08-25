@@ -1,23 +1,27 @@
-var hero = {
-	name: "",
-	att: 0,
-	hp: 0,
 
-	init: function(name, att, hp){
-		this.name = name;
-		this.att = att;
-		this.hp = hp;
-		return this;
-	}
+function hero (name, att, hp, id){ 
+	this.name = name;
+	this.att = att;
+	this.hp = hp;
+	this.id = id;
+	this.hit = 1;
+	this.getId = getId;
+	this.getInfo = getInfo;
 }
-var obi = hero.init("Obi Wan", 25, 120);
-var luke = hero.init("Luke Skywalker", 25, 120);
-var sid = hero.init("Darth Sidious", 25, 120);
-var maul = hero.init("Darth", 25, 120);
+
+function getId(){
+	return this.id;
+}
+
+var obi  = new hero("Obi Wan", 8, 120, "obi");
+var luke = new hero("Luke Skywalker", 5, 100, "luke");
+var sid = new hero("Darth Sidious", 20, 150, "sid");
+var maul = new hero("Darth Maul", 25, 180, "maul");
 
 var game = {
 	p1: "",
 	com: "",
+	info: [obi, luke, sid, maul],
 	cast: [],
 
 	removeCast: function(player){
@@ -25,8 +29,12 @@ var game = {
 		   if(game.cast[i].attr('id') == player.attr('id')) {
 		   	console.log("about to remove the player: " + player.attr("id"));
    			game.cast.splice(i, 1);
-	    }
-	}
+		    }
+		}
+	},
+
+	addInfo: function(hero){
+		this.info.upshift(hero);
 	},
 
 	setP1: function(player){
@@ -60,39 +68,63 @@ var game = {
  	}
  	 	
 }
- function selectEnemy(enemy){
- 	//selected enemy goes to defender
- 	//should not go to defender if defeder is full
-	 	if(!(enemy.attr('id') == game.p1.attr('id'))){
+function selectEnemy(enemy){
+//selected enemy goes to defender
+//should not go to defender if defeder is full
+	if(!(enemy.attr('id') == game.p1.attr('id'))){
 		console.log("adding player to com: " + enemy.name);
 		game.com = enemy;
 		$('#def').prepend(enemy);
-	 	game.setCom(enemy);
-	 	game.removeCast(enemy);
-	 	for(var i = 0; i < game.cast.length; i++){
-	 		$('#com').append(game.cast[i]);		
-	 	}
+		game.setCom(enemy);
+		game.removeCast(enemy);
+		for(var i = 0; i < game.cast.length; i++){
+			$('#com').append(game.cast[i]);		
+		}
+	}
+}
+
+ function getInfo(player){
+ 	for(var i = 0; i< game.info.length; i++){
+		if(player.attr('id') == game.info[i].id){
+			return game.info[i];
+		}else{
+			console.log("it no work");
+		}
 	}
  }
-
  function fight(p1,com){
  	//compare atts
  	//deduct hp
-
+ 	var fighter = getInfo(p1);
+ 	var defender = getInfo(com);
+ 	var damage = fighter.att * fighter.hit;
+	defender.hp = defender.hp - damage;
+ 	fighter.hit++;
+ 	fighter.hp = fighter.hp - defender.att;
+ 	if(fighter.hp == 0 || defender.hp ==0){
+ 		if(fighter.hp == 0){
+ 			gameOver();
+ 		}else if(defender.hp == 0){
+ 			game.com = "";
+ 		}
+ 	}
+ 	return damage;
  }
 
- function printFight(){
+ function printFight(p1, com, damage){
  	//print the att
  	//print the hp 
+ 	$("#print1").text("You attacked "+ com.name + " for " + damage + " damage.");
+ 	$("#print2").text("" + com.name + " attacked you back for " + p1.att + " damage.");
+ 	console.log("You attacked "+ com.name + " for " + damage + " damage.");
+ 	console.log("" + com.name + " attacked you back for " + p1.att + " damage.");
 
  }
 
  $(document).ready(function() {
-
- 	$("#obi")
-
+ 	
  	game.cast = [$('#obi'), $('#maul'), $('#sid'), $('#luke')];
- 	// $('#mydiv .myclass');
+ 	game.info = [obi, maul, sid, luke];
  	$(".player").on("click", function() {
  		if(game.p1 === ""){
  			selectCharacter($(this))
@@ -102,6 +134,15 @@ var game = {
  		}
  		
  	});
+ 	$("#rumble").on("click", function() {
+ 		console.log("the fight button has been clicked");
+ 		if(game.p1 != "" && game.com != ""){
+ 			var damage = fight(game.p1, game.com);
+ 			printFight(getInfo(game.p1),getInfo(game.com), damage);
+ 		}
+ 	});
+
+});
  	// $("#maul").on("click", function(){
  	// 	selectCharacter($("#maul"))
  	// });
@@ -122,8 +163,6 @@ var game = {
  	// $("#luke").on("click",function(){
  	// 	selectEnemy($("#luke"));
  	// });
-
-});
  	//when one of the 
  	// // the player will choose a character
  	// $("#obi").on("click", function(){
