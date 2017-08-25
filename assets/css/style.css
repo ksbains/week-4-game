@@ -14,26 +14,29 @@ img{
 }
 #p1 .player{
 	border-color: green;
-	border-width: 2px;
+	border-width: 5px;
 	background-color: white;
 }
 #com .player{
 	border-color: red;
-	border-width: 2px;
+	border-width: 5px;
 	background-color: black;
 }
 #def .player{
 	background-color: red;
 	border-color: black;
-	border-width: 2px;
+	border-width: 5px;
 }
 .selection .player{
-	background-color: blue; 
+	background-color: black; 
+	color: white;
+	border-color: blue;
+	border-width: 5px;
 }
 
 #com h3{
 	color: white;
 }
 body{
-	background-image: url("https://wallpaperscraft.com/image/star_wars_battlefront_electronic_arts_105865_3840x2160.jpg");
+	background-image: url("https://s-media-cache-ak0.pinimg.com/originals/ee/01/10/ee011075dcfae49aeec74f43b74f282e.jpg");
 }

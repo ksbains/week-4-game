@@ -5,8 +5,17 @@ function hero (name, att, hp, id){
 	this.hp = hp;
 	this.id = id;
 	this.hit = 1;
+	this.wins = 0;
 	this.getId = getId;
 	this.getInfo = getInfo;
+	this.resetGame = resetGame;
+}
+function resetGame(name, att, hp, id){
+	this.name = name;
+	this.att = att;
+	this.hp = hp;
+	this.id = id;
+	this.hit = 1;
 }
 
 function getId(){
@@ -87,8 +96,6 @@ function selectEnemy(enemy){
  	for(var i = 0; i< game.info.length; i++){
 		if(player.attr('id') == game.info[i].id){
 			return game.info[i];
-		}else{
-			console.log("it no work");
 		}
 	}
  }
@@ -101,23 +108,58 @@ function selectEnemy(enemy){
 	defender.hp = defender.hp - damage;
  	fighter.hit++;
  	fighter.hp = fighter.hp - defender.att;
- 	if(fighter.hp == 0 || defender.hp ==0){
- 		if(fighter.hp == 0){
+ 	if(fighter.hp <= 0 || defender.hp <= 0){
+ 		if(fighter.hp <= 0){
  			gameOver();
- 		}else if(defender.hp == 0){
+ 		}else if(defender.hp <= 0){
+ 			game.com.hide();
  			game.com = "";
+ 			fighter.wins++;
+ 			if(fighter.wins == 3){
+ 				$("#print2").text("you win, click restart to play again.");
+ 				$(".action").append("<button onclick = " + "'history.go(0)'"  + ">Restart</button>");
+ 			}else{
+ 				$("#print2").text("you killed the bad guy, choose someone else. ");
+ 			}
  		}
  	}
  	return damage;
  }
 
+ function gameOver(){
+ 	console.log("inside of gameOver");
+ 	game.cast = [$('#obi'), $('#maul'), $('#sid'), $('#luke')];	
+	obi  = resetGame("Obi Wan", 8, 120, "obi");
+	luke = resetGame("Luke Skywalker", 5, 100, "luke");
+	sid = resetGame("Darth Sidious", 20, 150, "sid");
+	maul = resetGame("Darth Maul", 25, 180, "maul");
+ 	game.info = [obi, maul, sid, luke];
+ 	game.p1 = "";
+ 	game.com = "";
+ 	//show the restart button. 
+ 	console.log("THE LINE")
+ 	$( ".action" ).append("<button onclick = " + "'restartGame()'"  + ">Restart</button>");
+ 	$("#print2").text("you ded")
+
+ }
+
+ function restartGame(){
+ 	console.log("inside of restartGame");
+ 	for(var i = 0; i <game.cast.length; i++){
+ 		//show all of the cast
+ 		//move them all to the  selection. 
+ 		$("#selection").append(game.cast[i]);
+ 		game.cast[i].show();
+ 	}
+
+ }
  function printFight(p1, com, damage){
  	//print the att
  	//print the hp 
  	$("#print1").text("You attacked "+ com.name + " for " + damage + " damage.");
  	$("#print2").text("" + com.name + " attacked you back for " + p1.att + " damage.");
  	console.log("You attacked "+ com.name + " for " + damage + " damage.");
- 	console.log("" + com.name + " attacked you back for " + p1.att + " damage.");
+ 	console.log("" + com.name + " attacked you back for " + com.att + " damage.");
 
  }
 
@@ -135,13 +177,11 @@ function selectEnemy(enemy){
  		
  	});
  	$("#rumble").on("click", function() {
- 		console.log("the fight button has been clicked");
  		if(game.p1 != "" && game.com != ""){
  			var damage = fight(game.p1, game.com);
  			printFight(getInfo(game.p1),getInfo(game.com), damage);
  		}
  	});
-
 });
  	// $("#maul").on("click", function(){
  	// 	selectCharacter($("#maul"))
