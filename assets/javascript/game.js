@@ -138,7 +138,7 @@ function selectEnemy(enemy){
  	game.com = "";
  	//show the restart button. 
  	console.log("THE LINE")
- 	$( ".action" ).append("<button onclick = " + "'restartGame()'"  + ">Restart</button>");
+ 	$(".action").append("<button onclick = " + "'history.go(0)'"  + ">Restart</button>");
  	$("#print2").text("you ded")
 
  }
@@ -162,11 +162,18 @@ function selectEnemy(enemy){
  	console.log("" + com.name + " attacked you back for " + com.att + " damage.");
 
  }
+ function printHP(){
+ 	$("#obiHP").innerHTML = ("HP: " + obi.hp + "");
+ 	// $("#lukeHP").replaceWith("<p class = "'hp'" id = "'sidHp'" >HP: " + luke.hp  + "</p>");
+ 	$("#sidHP").text("HP: "+ sid.hp  + "");
+ 	$("#maulHP").text("HP: "+ maul.hp  + "");
+ }
 
  $(document).ready(function() {
  	
  	game.cast = [$('#obi'), $('#maul'), $('#sid'), $('#luke')];
  	game.info = [obi, maul, sid, luke];
+ 	printHP();
  	$(".player").on("click", function() {
  		if(game.p1 === ""){
  			selectCharacter($(this))
@@ -178,8 +185,11 @@ function selectEnemy(enemy){
  	});
  	$("#rumble").on("click", function() {
  		if(game.p1 != "" && game.com != ""){
+ 			printHP();
  			var damage = fight(game.p1, game.com);
+ 			printHP();
  			printFight(getInfo(game.p1),getInfo(game.com), damage);
+ 			printHP();
  		}
  	});
 });

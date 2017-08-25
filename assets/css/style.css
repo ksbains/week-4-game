@@ -4,9 +4,12 @@
 .player{
 	text-align: center;
 	border: 1px solid black;
-	width: 200px;
+	width: 250px;
 	height: 200px;
 	margin: 5px;
+}
+.hp{
+	color: green;
 }
 img{
 	width: 100px;
