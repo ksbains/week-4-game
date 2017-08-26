@@ -119,7 +119,7 @@ function selectEnemy(enemy){
  				$("#print2").text("you win, click restart to play again.");
  				$(".action").append("<button onclick = " + "'history.go(0)'"  + ">Restart</button>");
  			}else{
- 				$("#print2").text("you killed the bad guy, choose someone else. ");
+ 				$("#print2").text("You have defeated " + defender.name + ", you can choose to fight another enemy.");
  			}
  		}
  	}
@@ -139,7 +139,7 @@ function selectEnemy(enemy){
  	//show the restart button. 
  	console.log("THE LINE")
  	$(".action").append("<button onclick = " + "'history.go(0)'"  + ">Restart</button>");
- 	$("#print2").text("you ded")
+ 	$("#print2").text("You have been defeated... GAME OVER!!!")
 
  }
 
