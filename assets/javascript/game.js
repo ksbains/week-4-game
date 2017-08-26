@@ -157,16 +157,16 @@ function selectEnemy(enemy){
  	//print the att
  	//print the hp 
  	$("#print1").text("You attacked "+ com.name + " for " + damage + " damage.");
- 	$("#print2").text("" + com.name + " attacked you back for " + p1.att + " damage.");
+ 	$("#print2").text("" + com.name + " attacked you back for " + com.att + " damage.");
  	console.log("You attacked "+ com.name + " for " + damage + " damage.");
  	console.log("" + com.name + " attacked you back for " + com.att + " damage.");
 
  }
  function printHP(){
- 	$("#obiHP").innerHTML = ("HP: " + obi.hp + "");
- 	// $("#lukeHP").replaceWith("<p class = "'hp'" id = "'sidHp'" >HP: " + luke.hp  + "</p>");
- 	$("#sidHP").text("HP: "+ sid.hp  + "");
- 	$("#maulHP").text("HP: "+ maul.hp  + "");
+ 	$("#obiHp").text("HP: " + obi.hp + "");
+ 	$("#lukeHp").text("HP: " + luke.hp + "");
+ 	$("#sidHp").text("HP: "+ sid.hp  + "");
+ 	$("#maulHp").html("HP: "+ maul.hp  + "");
  }
 
  $(document).ready(function() {
@@ -183,15 +183,15 @@ function selectEnemy(enemy){
  		}
  		
  	});
+ 	printHP();
  	$("#rumble").on("click", function() {
  		if(game.p1 != "" && game.com != ""){
- 			printHP();
  			var damage = fight(game.p1, game.com);
- 			printHP();
  			printFight(getInfo(game.p1),getInfo(game.com), damage);
- 			printHP();
  		}
+ 		printHP();
  	});
+ 	printHP();
 });
  	// $("#maul").on("click", function(){
  	// 	selectCharacter($("#maul"))
